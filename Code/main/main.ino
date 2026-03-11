@@ -1,3 +1,7 @@
+#include <LiquidCrystal.h>
+
+LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
+
 // 1. Sub functions
 // 1.1 LDR functions
 const int LDR_pin = A0;
@@ -60,5 +64,8 @@ void setup() {
 void loop() {
   // LDRWorking();
   // LM35Working();
-  MQ135Working();
+  // MQ135Working();
+
+  lcd.setCursor(0, 1);
+  lcd.print("Hello");
 }
