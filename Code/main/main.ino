@@ -42,6 +42,16 @@ void LM35Working() {
   delay(500);
 }
 
+// 1.3 MQ135 functions
+const int MQ135_pin = A2;
+
+void MQ135Working() {
+  int MQ135_ADC = analogRead(MQ135_pin);
+  Serial.print("MQ135 ADC: ");
+  Serial.println(MQ135_ADC);
+  delay(500);
+}
+
 // 2. Main functions
 void setup() {
   SerialMonitorSetup();
@@ -49,5 +59,6 @@ void setup() {
 
 void loop() {
   // LDRWorking();
-  LM35Working();
+  // LM35Working();
+  MQ135Working();
 }
