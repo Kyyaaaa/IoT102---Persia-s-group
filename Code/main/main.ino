@@ -2,6 +2,8 @@
 
 LiquidCrystal lcd(7, 6, 5, 4, 3, 2);
 
+unsigned long long current_time;
+
 // 1. Basic
 // 1.1 LDR functions
 const int LDR_pin = A0;
@@ -18,7 +20,7 @@ double fromADCToLux(int ADC_value) {
 }
 
 void LDRWorking() {
-  unsigned long long current_time = millis();
+  current_time = millis();
   if(current_time - LDR_time <= LDR_interval) return;
 
   LDR_time = current_time;
@@ -33,13 +35,13 @@ unsigned long long LM35_time = 0;
 const int LM35_interval = 500;
 
 double fromADCToCelsius(int ADC_value) {
-  double voltage = ADC_value * 5.0 / 1023.0;
+  double voltage = ADC_value * (5.0 / 1023.0);
   double temperature = voltage * 100.0;
   return temperature;
 }
 
 void LM35Working() {
-  unsigned long long current_time = millis();
+  current_time = millis();
   if(current_time - LM35_time <= LM35_interval) return;
 
   LM35_time = current_time;
@@ -54,7 +56,7 @@ unsigned long long MQ135_time = 0;
 const int MQ135_interval = 500;
 
 void MQ135Working() {
-  unsigned long long current_time = millis();
+  current_time = millis();
   if(current_time - MQ135_time <= MQ135_interval) return;
 
   MQ135_time = current_time;
@@ -94,7 +96,7 @@ void SerialMonitorSetup() {
 }
 
 void SerialPrint() {
-  unsigned long long current_time = millis();
+  current_time = millis();
   if(current_time - Serial_time <= Serial_interval) return;
 
   Serial_time = current_time;
