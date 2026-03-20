@@ -93,6 +93,9 @@ unsigned long long Serial_time = 0;
 const int Serial_interval = 500;
 void SerialMonitorSetup() {
   Serial.begin(9600);
+//  Serial.print("light,");
+//  Serial.print("temperature,");
+//  Serial.println("air");
 }
 
 void SerialPrint() {
