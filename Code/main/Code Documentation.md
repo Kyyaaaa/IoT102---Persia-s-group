@@ -168,6 +168,41 @@ void LCDWorking() {
 }
 ```
 
-# Vấn đề
-- LM35 chưa đo đúng nhiệt độ (bị cao hơn nhiệt độ ước tính xung quanh)
-- Chưa có sơ đồ mạch nguyên lý
+# 2. Chức năng nâng cao
+## 2.1 In ra dữ liệu dạng CSV
+- Thuật toán: 
+    - Sử dụng Serial Monitor để in lần lượt dữ liệu ra từng dòng theo dạng `Light,Temperature,Air`
+- Code:
+```cpp
+// 2.1 Serial functions
+unsigned long long Serial_time = 0;
+const int Serial_interval = 500;
+void SerialMonitorSetup() {
+  Serial.begin(9600);
+//  Serial.print("light,");
+//  Serial.print("temperature,");
+//  Serial.println("air");
+}
+
+void SerialPrint() {
+  current_time = millis();
+  if(current_time - Serial_time <= Serial_interval) return;
+
+  Serial_time = current_time;
+
+  // Serial.print("Lux:");
+  Serial.print(fromADCToLux(LDR_ADC));
+  Serial.print(",");
+
+  // Serial.print(",Temp:");
+  Serial.print(fromADCToCelsius(LM35_ADC));
+  Serial.print(",");
+
+  // Serial.print(",Air:");
+  Serial.println(MQ135_ADC);
+}
+```
+
+# Vấn đề hiện tại
+- Để LM35 đo đúng thì phải rút MQ135 ra
+- Dữ liệu đang lấy trong khoảng thời gian là 500ms nên chưa được đều (Đang xem xét đến việc lấy trung bình)
