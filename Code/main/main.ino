@@ -14,8 +14,8 @@ const int LDR_interval = 500;
 double fromADCToLux(int ADC_value) {
   double voltage = ADC_value * 5.0 / 1023.0;
   if(voltage == 0) return 0;
-  double LDR_R = 1000.0 * (5.0 / voltage - 1.0);
-  double lux = 500 * pow((LDR_R / 1000.0), -1.4);
+  double LDR_R = 10000.0 * (5.0 / voltage - 1.0);
+  double lux = pow(500000.0 / LDR_R, 0.714);
   return lux;
 }
 
