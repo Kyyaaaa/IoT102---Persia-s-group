@@ -54,6 +54,15 @@ const int MQ135_pin = A2;
 int MQ135_ADC = 0;
 unsigned long long MQ135_time = 0;
 const int MQ135_interval = 500;
+const double R_0 = 6130.0;
+const double R_L = 10000.0;
+
+double fromADCToppm(int ADC_value, double a, double b) {
+  double voltage = ADC_value * (5.0 / 1023.0);
+  double R_s = R_L * (5.0 - voltage) / voltage;
+  double ppm = a * pow(R_s / R_0, b);
+  return ppm;
+}
 
 void MQ135Working() {
   current_time = millis();
@@ -83,8 +92,8 @@ void LCDWorking() {
   lcd.setCursor(0,1);
 
   lcd.print("Air:");
-  lcd.print(MQ135_ADC);
-  lcd.print("(ADC)   ");
+  lcd.print(fromADCToppm(MQ135_ADC, 44.947, -3.445));
+  lcd.print("(ppm)   ");
 }
 
 // 2. Advanced
@@ -113,7 +122,7 @@ void SerialPrint() {
   Serial.print(",");
 
   // Serial.print(",Air:");
-  Serial.println(MQ135_ADC);
+  Serial.println(fromADCToppm(MQ135_ADC, 44.947, -3.445));
 }
 
 // 3. Main functions
